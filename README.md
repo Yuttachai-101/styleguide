@@ -6,11 +6,16 @@
 
 คำว่า "สไตล์" ในที่นี้ครอบคลุมเนื้อหาหลายด้าน ตั้งแต่เรื่องเล็กน้อยอย่าง "จงใช้ camelCase สำหรับชื่อตัวแปร" ไปจนถึงกฎเหล็กอย่าง "ห้ามใช้ตัวแปร Global" หรือ "ห้ามใช้ Exceptions" โปรเจกต์นี้ ([google/styleguide](https://github.com/google/styleguide)) ได้รวบรวมลิงก์ไปยังแนวทางปฏิบัติที่เราใช้จริงในการเขียนโค้ดที่ Google หากคุณกำลังแก้ไขโปรเจกต์ที่มีต้นกำเนิดมาจาก Google คุณอาจถูกแนะนำมาที่หน้านี้เพื่อดูสไตล์ที่เหมาะสมกับโปรเจกต์นั้น
 
+TH
+
+- [Go Style Guide][go]
+
+EN
+
 - [AngularJS Style Guide][angular]
 - [Common Lisp Style Guide][cl]
 - [C++ Style Guide][cpp]
 - [C# Style Guide][csharp]
-- [Go Style Guide][go]
 - [HTML/CSS Style Guide][htmlcss]
 - [JavaScript Style Guide][js]
 - [Java Style Guide][java]
@@ -49,12 +54,7 @@
 
 <a rel="license" href="https://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
 
-TH
-
 [go]: go/index_th
-
-EN
-
 [cpp]: https://google.github.io/styleguide/cppguide.html
 [csharp]: https://google.github.io/styleguide/csharp-style.html
 [swift]: https://google.github.io/swift/
