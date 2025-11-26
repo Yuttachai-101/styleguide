@@ -1,6 +1,6 @@
 # Go Style (สไตล์การเขียน Go)
 
-[ภาพรวม](index) | [คู่มือหลัก](guide) | [การตัดสินใจ](decisions) | [แนวทางปฏิบัติที่ดีที่สุด](best-practices)
+[ภาพรวม](index_th) | [คู่มือหลัก](guide_th) | [การตัดสินใจ](decisions_th) | [แนวทางปฏิบัติที่ดีที่สุด](best-practices_th)
 
 ---
 
@@ -18,16 +18,16 @@
 
 ### เอกสารประกอบ (Documents)
 
-1.  **[Style Guide (คู่มือสไตล์)](https://yuttachai-101.github.io/styleguide/go/guide)**
+1.  **[Style Guide (คู่มือสไตล์)](https://yuttachai-101.github.io/styleguide/go/guide_th)**
     วางรากฐานของสไตล์ Go ที่ Google เอกสารนี้ถือเป็น **ข้อกำหนดหลัก** และใช้เป็นพื้นฐานสำหรับคำแนะนำในเอกสารอื่นๆ
 
-2.  **[Style Decisions (การตัดสินใจเรื่องสไตล์)](https://yuttachai-101.github.io/styleguide/go/decisions)**
+2.  **[Style Decisions (การตัดสินใจเรื่องสไตล์)](https://yuttachai-101.github.io/styleguide/go/decisions_th)**
     เอกสารที่มีรายละเอียดมากขึ้น สรุปการตัดสินใจในจุดเฉพาะเจาะจงพร้อมเหตุผลประกอบ
 
     - เนื้อหาอาจเปลี่ยนแปลงได้ตามข้อมูลใหม่ ฟีเจอร์ภาษา หรือไลบรารีใหม่ๆ
     - โปรแกรมเมอร์ทั่วไปไม่จำเป็นต้องติดตามอัปเดตเอกสารนี้ตลอดเวลา
 
-3.  **[Best Practices (แนวทางปฏิบัติที่ดีที่สุด)](https://yuttachai-101.github.io/styleguide/go/best-practices)**
+3.  **[Best Practices (แนวทางปฏิบัติที่ดีที่สุด)](https://yuttachai-101.github.io/styleguide/go/best-practices_th)**
     รวบรวมรูปแบบ (Patterns) ที่ผ่านการพิสูจน์แล้วว่าแก้ปัญหาได้ดี อ่านง่าย และทนทานต่อการบำรุงรักษา
     - ไม่ได้เป็นกฎข้อบังคับตายตัว (Canonical) แต่แนะนำให้ใช้เพื่อให้โค้ดมีความสม่ำเสมอ
 
