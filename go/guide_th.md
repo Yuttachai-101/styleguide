@@ -1,6 +1,6 @@
 # Go Style Guide (คู่มือสไตล์ Go)
 
-[ภาพรวม](index) | [คู่มือหลัก](guide) | [การตัดสินใจ](decisions) | [แนวทางปฏิบัติที่ดีที่สุด](best-practices)
+[ภาพรวม](index_th) | [คู่มือหลัก](guide_th) | [การตัดสินใจ](decisions_th) | [แนวทางปฏิบัติที่ดีที่สุด](best-practices_th)
 
 ---
 

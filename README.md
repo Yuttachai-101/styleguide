@@ -49,12 +49,17 @@
 
 <a rel="license" href="https://creativecommons.org/licenses/by/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/3.0/88x31.png" /></a>
 
+TH
+
+[go]: go/index_th
+
+EN
+
 [cpp]: https://google.github.io/styleguide/cppguide.html
 [csharp]: https://google.github.io/styleguide/csharp-style.html
 [swift]: https://google.github.io/swift/
 [objc]: objcguide.md
 [gh-tracker]: https://github.com/google/styleguide/issues
-[go]: go/index_th
 [java]: https://google.github.io/styleguide/javaguide.html
 [json]: https://google.github.io/styleguide/jsoncstyleguide.xml
 [kotlin]: https://developer.android.com/kotlin/style-guide
