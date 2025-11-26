@@ -54,7 +54,7 @@
 [swift]: https://google.github.io/swift/
 [objc]: objcguide.md
 [gh-tracker]: https://github.com/google/styleguide/issues
-[go]: go/
+[go]: go/index_th
 [java]: https://google.github.io/styleguide/javaguide.html
 [json]: https://google.github.io/styleguide/jsoncstyleguide.xml
 [kotlin]: https://developer.android.com/kotlin/style-guide
