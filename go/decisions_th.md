@@ -24,16 +24,69 @@
 
 ### ชื่อ Receiver (Receiver names)
 
-- สั้น (ปกติ 1-2 ตัวอักษร)
-- เป็นตัวย่อของ Type นั้นๆ (เช่น `func (c *Client)` ไม่ใช่ `func (cl *Client)`)
-- ใช้ชื่อเดิมอย่างสม่ำเสมอตลอดทั้ง Type
-- **ห้าม** ใช้ `this` หรือ `self`
+- ควรใช้ตัวอักษรเพียง หนึ่งหรือสองตัวอักษร เท่านั้น
+- ควรใช้ตัวอักษรที่เป็น คำย่อ หรือตัวย่อของชื่อ Type นั้น ๆ เอง (เช่น `func (c *Client)` ไม่ใช่ `func (cl *Client)`)
+- ใช้ชื่อเดิมอย่างสม่ำเสมอตลอดทั้ง สำหรับ Receiver ทุกตัวของ Type เดียวกันนั้น ๆ (เช่น (u User) ก็ควรเป็นแบบนี้ตลอด)
+
+| Long Name                   | Better Name               |
+| --------------------------- | ------------------------- |
+| `func (tray Tray)`          | `func (t Tray)`           |
+| `func (info *ResearchInfo)` | `func (ri *ResearchInfo)` |
+| `func (this *ReportWriter)` | `func (w *ReportWriter)`  |
+| `func (self *Scanner)`      | `func (s *Scanner)`       |
+
+[Receiver]: https://golang.org/ref/spec#Method_declarations
 
 ### ชื่อค่าคงที่ (Constant names)
 
-- ใช้ `MixedCaps` เหมือนชื่ออื่นๆ (เช่น `MaxPacketSize` ไม่ใช่ `MAX_PACKET_SIZE`)
-- **ห้าม** ใช้ `k` นำหน้า (เช่น `kMaxUsers`)
-- ตั้งชื่อตามบทบาท (Role) ไม่ใช่ตามค่า (Value)
+- ต้องใช้รูปแบบ [MixedCaps] เหมือนกับชื่ออื่นๆ ทั้งหมดในภาษา Go.(เช่น `MaxPacketSize` ไม่ใช่ `MAX_PACKET_SIZE`)
+- [Exported] ค่าคงที่เริ่มต้นด้วยตัวพิมพ์ใหญ่ ในขณะที่ค่าคงที่ที่ไม่ได้ส่งออกจะเริ่มต้นด้วยตัวพิมพ์เล็ก
+- ค่าคงที่ที่ [Exported] (Exported) จะเริ่มต้นด้วยตัวพิมพ์ใหญ่ (Uppercase) ในขณะที่ค่าคงที่ที่ ไม่ได้ส่งออก (Unexported) จะเริ่มต้นด้วยตัวพิมพ์เล็ก (Lowercase)
+  หลักการนี้ใช้ได้แม้ว่ามันจะขัดกับธรรมเนียมปฏิบัติในภาษาอื่น ๆ ก็ตาม ชื่อค่าคงที่ไม่ควรเป็นเพียงการดัดแปลงมาจากค่าของมัน แต่ควรอธิบายว่าค่านั้นสื่อถึงอะไรแทน
+  อธิบายว่าค่านั้นสื่อถึงอะไร
+
+```go
+// Good:
+const MaxPacketSize = 512
+
+const (
+    ExecuteBit = 1 << iota
+    WriteBit
+    ReadBit
+)
+```
+
+[MixedCaps]: guide#mixed-caps
+[Exported]: https://tour.golang.org/basics/3
+
+อย่าใช้ชื่อค่าคงที่ที่ไม่ใช่ MixedCaps หรือค่าคงที่ที่มีคำนำหน้า `K`
+
+```go
+// Bad:
+const MAX_PACKET_SIZE = 512
+const kMaxBufferSize = 1024
+const KMaxUsersPergroup = 500
+```
+
+ตั้งชื่อค่าคงที่ตามบทบาท ไม่ใช่ตามค่า หากค่าคงที่ไม่มีบทบาทนอกเหนือจากค่าของมัน ก็ไม่จำเป็นต้องนิยามให้เป็นค่าคงที่
+
+```go
+// Bad:
+const Twelve = 12
+
+const (
+    UserNameColumn = "username"
+    GroupColumn    = "group"
+)
+```
+
+<!--#include file="/go/g3doc/style/includes/special-name-exception.md"-->
+
+<a id="initialisms"></a>
+
+<span style="color: red; font-size: 1.5em;">
+ -----------check point----------
+</span>
 
 ### ตัวย่อ (Initialisms)
 
