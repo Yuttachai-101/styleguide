@@ -248,11 +248,119 @@ Do not use the term "stutter" to refer to cases when a name is repetitive.
 
 #### Variable name vs. type
 
-## -----------check point----------
+คอมไพเลอร์ (Compiler) ทราบชนิดข้อมูลของตัวแปรอยู่เสมอ และในกรณีส่วนใหญ่ ผู้อ่านก็สามารถเข้าใจได้อย่างชัดเจนว่าตัวแปรนั้นมีชนิดข้อมูลอะไรจากการใช้งานของมัน
 
----
+การระบุชนิดข้อมูลของตัวแปรให้ชัดเจนนั้น จำเป็นก็ต่อเมื่อ ค่าของตัวแปรนั้นปรากฏซ้ำกันสองครั้งในขอบเขต (scope) เดียวกันเท่านั้น
+
+| Repetitive Name               | Better Name            |
+| ----------------------------- | ---------------------- |
+| `var numUsers int`            | `var users int`        |
+| `var nameString string`       | `var name string`      |
+| `var primaryProject *Project` | `var primary *Project` |
+
+หากค่า (value) นั้นปรากฏในหลายรูปแบบ สามารถทำให้ชัดเจนได้โดยใช้คำพิเศษเพิ่มเติม เช่น raw (ดิบ/ต้นฉบับ) และ parsed (ที่ถูกแยกวิเคราะห์แล้ว) หรือโดยการระบุการแสดงผล (representation) :
+
+```go
+// Good:
+limitRaw := r.FormValue("limit")
+limit, err := strconv.Atoi(limitRaw)
+```
+
+```go
+// Good:
+limitStr := r.FormValue("limit")
+limit, err := strconv.Atoi(limitStr)
+```
+
+<a id="repetitive-in-context"></a>
+
+#### External context vs. local names
+
+ชื่อที่รวมข้อมูลที่ได้มาจากบริบทรอบข้างของมัน มักจะสร้างความรกรุงรัง (extra noise) โดยไม่มีประโยชน์
+
+ชื่อแพ็กเกจ, ชื่อเมธอด, ชื่อชนิดข้อมูล (type name), ชื่อฟังก์ชัน, เส้นทางการนำเข้า (import path), และแม้แต่ชื่อไฟล์ ล้วนสามารถให้บริบทที่มีคุณสมบัติในการระบุชื่อทั้งหมดที่อยู่ภายในนั้นได้โดยอัตโนมัติ
+
+```go
+// Bad:
+// In package "ads/targeting/revenue/reporting"
+type AdsTargetingRevenueReport struct{}
+
+func (p *Project) ProjectName() string
+```
+
+```go
+// Good:
+// In package "ads/targeting/revenue/reporting"
+type Report struct{}
+
+func (p *Project) Name() string
+```
+
+```go
+// Bad:
+// In package "sqldb"
+type DBConnection struct{}
+```
+
+```go
+// Good:
+// In package "sqldb"
+type Connection struct{}
+```
+
+```go
+// Bad:
+// In package "ads/targeting"
+func Process(in *pb.FooProto) *Report {
+    adsTargetingID := in.GetAdsTargetingID()
+}
+```
+
+```go
+// Good:
+// In package "ads/targeting"
+func Process(in *pb.FooProto) *Report {
+    id := in.GetAdsTargetingID()
+}
+```
+
+การทำซ้ำควรได้รับการประเมินโดยทั่วไปในบริบทของผู้ใช้งานสัญลักษณ์นั้น ๆ มากกว่าที่จะประเมินแบบแยกส่วน
+
+ตัวอย่างเช่น โค้ดต่อไปนี้มีชื่อจำนวนมากที่อาจจะใช้ได้ในบางสถานการณ์ แต่กลับกลายเป็นการซ้ำซ้อนเมื่ออยู่ในบริบท (redundant in context):
+
+```go
+// Bad:
+func (db *DB) UserCount() (userCount int, err error) {
+    var userCountInt64 int64
+    if dbLoadError := db.LoadFromDatabase("count(distinct users)", &userCountInt64); dbLoadError != nil {
+        return 0, fmt.Errorf("failed to load user count: %s", dbLoadError)
+    }
+    userCount = int(userCountInt64)
+    return userCount, nil
+}
+```
+
+แต่ในทางกลับกัน ข้อมูลเกี่ยวกับชื่อที่ชัดเจนอยู่แล้วจากบริบทหรือการใช้งาน มักจะสามารถละเว้นได้:
+
+Instead, information about names that are clear from context or usage can often
+be omitted:
+
+```go
+// Good:
+func (db *DB) UserCount() (int, error) {
+    var count int64
+    if err := db.Load("count(distinct users)", &count); err != nil {
+        return 0, fmt.Errorf("failed to load user count: %s", err)
+    }
+    return int(count), nil
+}
+```
+
+<a id="commentary"></a>
 
 ## คอมเมนต์ (Commentary)
+
+## -----------check point----------
 
 - **Doc Comments:** ชื่อที่ Export ต้องมี Doc comment เสมอ โดยเริ่มด้วยชื่อของสิ่งนั้นและเป็นประโยคที่สมบูรณ์
   - เช่น `// Request represents a request to run a command.`
