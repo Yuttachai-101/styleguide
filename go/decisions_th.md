@@ -360,6 +360,276 @@ func (db *DB) UserCount() (int, error) {
 
 ## คอมเมนต์ (Commentary)
 
+หลักการปฏิบัติเกี่ยวกับคำอธิบายโค้ด (ซึ่งรวมถึงการแสดงความคิดเห็นในส่วนใด, การใช้สไตล์ใด, วิธีการให้ตัวอย่างที่สามารถรันได้, ฯลฯ) มีวัตถุประสงค์เพื่อสนับสนุนประสบการณ์ในการอ่านเอกสารประกอบของ API สาธารณะ (public API)[Effective Go](http://golang.org/doc/effective_go.html#commentary) สำหรับข้อมูลเพิ่มเติม
+
+ส่วนของเอกสารแนวทางปฏิบัติที่ดีที่สุดที่เกี่ยวกับ [documentation conventions](หลักการปฏิบัติในการจัดทำเอกสาร)
+ได้มีการกล่าวถึงเรื่องนี้โดยละเอียดเพิ่มเติม
+
+**แนวทางปฏิบัติที่ดีที่สุด (Best Practice)** ให้ใช้ [doc preview] ระหว่างการพัฒนาและการตรวจสอบโค้ด (code review) เพื่อดูว่าเอกสารและตัวอย่างที่สามารถรันได้นั้นมีประโยชน์หรือไม่ และแสดงผลในรูปแบบที่คุณคาดหวังหรือไม่
+
+**เคล็ดลับ (Tip)** Godoc (เครื่องมือสร้างเอกสารของ Go) ใช้รูปแบบพิเศษเพียงเล็กน้อยเท่านั้น โดยปกติแล้ว รายการ (lists) และส่วนย่อยของโค้ด (code snippets) ควรร่นเข้าไป (indented) เพื่อหลีกเลี่ยงการตัดบรรทัด (linewrapping) นอกเหนือจากการร่นบรรทัดแล้ว โดยทั่วไปควรหลีกเลี่ยงการตกแต่งอื่น ๆ
+
+[doc preview]: best-practices#documentation-preview
+[documentation conventions]: best-practices#documentation-conventions
+
+<a id="comment-line-length"></a>
+
+### Comment line length
+
+ตรวจสอบให้แน่ใจว่า ความคิดเห็น (commentary) สามารถอ่านได้จากซอร์สโค้ด แม้บนหน้าจอที่ แคบ ก็ตาม
+
+เมื่อความคิดเห็นมีความยาวมากเกินไป ขอแนะนำให้แบ่งความคิดเห็นนั้นออกเป็นหลายบรรทัด โดยแต่ละบรรทัดเป็นความคิดเห็นเดี่ยวๆ หากเป็นไปได้ ให้พยายามเขียนความคิดเห็นที่สามารถอ่านได้อย่างดีบนเทอร์มินัลที่มีความกว้าง 80 คอลัมน์ อย่างไรก็ตาม นี่ไม่ใช่ข้อจำกัดที่ตายตัว ไม่มีการจำกัดความยาวบรรทัดตายตัว สำหรับความคิดเห็นในภาษา Go ตัวอย่างเช่น ไลบรารีมาตรฐาน (standard library) มักจะเลือกที่จะแบ่งความคิดเห็นตามเครื่องหมายวรรคตอน ซึ่งบางครั้งทำให้ความยาวของแต่ละบรรทัดใกล้เคียงกับ 60-70 ตัวอักษร
+
+มีโค้ดที่มีอยู่จำนวนมากที่ความคิดเห็น เกิน 80 ตัวอักษร ในความยาว แนวทางนี้ ไม่ควร ถูกนำมาใช้เป็นข้ออ้างในการเปลี่ยนแปลงโค้ดดังกล่าวในฐานะส่วนหนึ่งของการตรวจสอบความสามารถในการอ่าน (readability review) (ดูที่ [consistency](guide#consistency)) อย่างไรก็ตาม ทีมต่างๆ ได้รับการสนับสนุนให้ปรับปรุงความคิดเห็น ให้เป็นไปตามแนวทางนี้อย่างเป็นโอกาส (opportunistically) เมื่อทำการปรับปรุงโครงสร้างโค้ด (refactors) อื่นๆ เป้าหมายหลักของแนวทางนี้คือเพื่อให้มั่นใจว่าที่ปรึกษาด้านความสามารถในการอ่าน (readability mentors) ของ Go ทุกคนจะให้ คำแนะนำเดียวกัน เมื่อมีการให้คำแนะนำ
+
+ดู [post from The Go Blog on documentation] สำหรับข้อมูลเพิ่มเติมเกี่ยวกับการเขียนความคิดเห็น
+
+[post from The Go Blog on documentation]: https://blog.golang.org/godoc-documenting-go-code
+
+```text
+# Good:
+// This is a comment paragraph.
+// The length of individual lines doesn't matter in Godoc;
+// but the choice of wrapping makes it easy to read on narrow screens.
+//
+// Don't worry too much about the long URL:
+// https://supercalifragilisticexpialidocious.example.com:8080/Animalia/Chordata/Mammalia/Rodentia/Geomyoidea/Geomyidae/
+//
+// Similarly, if you have other information that is made awkward
+// by too many line breaks, use your judgment and include a long line
+// if it helps rather than hinders.
+```
+
+หลีกเลี่ยงความคิดเห็นที่จะมีการตัดบรรทัดซ้ำไปซ้ำมาบนหน้าจอขนาดเล็ก ซึ่งทำให้ประสบการณ์ในการอ่านไม่ดี
+
+```text
+# Bad:
+// This is a comment paragraph. The length of individual lines doesn't matter in
+Godoc;
+// but the choice of wrapping causes jagged lines on narrow screens or in code
+review,
+// which can be annoying, especially when in a comment block that will wrap
+repeatedly.
+//
+// Don't worry too much about the long URL:
+// https://supercalifragilisticexpialidocious.example.com:8080/Animalia/Chordata/Mammalia/Rodentia/Geomyoidea/Geomyidae/
+```
+
+<a id="doc-comments"></a>
+
+### Doc comments
+
+<a id="TOC-DocComments"></a>
+
+ชื่อที่ส่งออก (exported names) ในระดับบนสุดทั้งหมดจะต้องมี ความคิดเห็นประกอบเอกสาร (doc comments) เช่นเดียวกับการประกาศประเภท (type) หรือฟังก์ชัน (function) ที่ไม่ได้ส่งออก (unexported) ซึ่งมีพฤติกรรมหรือความหมายที่ไม่ชัดเจน ความคิดเห็นเหล่านี้ควรเป็น [full sentences] ซึ่งเริ่มต้นด้วย ชื่อของวัตถุ ที่กำลังถูกอธิบาย สามารถนำคำนำหน้านาม (article) เช่น "a", "an", หรือ "the" มาวางไว้หน้าชื่อนั้นได้ เพื่อให้อ่านได้อย่างเป็นธรรมชาติมากขึ้น
+
+```go
+// Good:
+// A Request represents a request to run a command.
+type Request struct { ...
+
+// Encode writes the JSON encoding of req to w.
+func Encode(w io.Writer, req *Request) { ...
+```
+
+ความคิดเห็นประกอบเอกสาร (Doc comments) จะปรากฏใน [Godoc](https://pkg.go.dev/) และถูกนำมาแสดงโดย IDEs (สภาพแวดล้อมการพัฒนาแบบบูรณาการ) ดังนั้นจึง ควรเขียนขึ้นสำหรับทุกคนที่ใช้แพ็กเกจนั้นๆ
+
+[full sentences]: #comment-sentences
+
+ความคิดเห็นประกอบเอกสาร (A documentation comment) จะใช้กับ สัญลักษณ์ (symbol) ที่อยู่ถัดไป หรือกับ กลุ่มของฟิลด์ (group of fields) หากความคิดเห็นนั้นปรากฏอยู่ใน โครงสร้าง (struct)
+
+```go
+// Good:
+// Options configure the group management service.
+type Options struct {
+    // General setup:
+    Name  string
+    Group *FooGroup
+
+    // Dependencies:
+    DB *sql.DB
+
+    // Customization:
+    LargeGroupThreshold int // optional; default: 10
+    MinimumMembers      int // optional; default: 2
+}
+```
+
+แนวทางปฏิบัติที่ดีที่สุด (Best Practice):
+หากคุณมีความคิดเห็นประกอบเอกสาร (doc comments) สำหรับโค้ดที่ ไม่ได้ส่งออก (unexported code) ให้ปฏิบัติตามธรรมเนียมเช่นเดียวกับโค้ดที่ส่งออก (exported) (กล่าวคือ ให้เริ่มต้นความคิดเห็นด้วยชื่อที่ไม่ได้ส่งออกนั้น)
+
+การทำเช่นนี้จะทำให้ง่ายต่อการส่งออกในภายหลัง โดยเพียงแค่แทนที่ชื่อที่ไม่ได้ส่งออกด้วยชื่อที่ถูกส่งออกใหม่ ทั้งในส่วนของความคิดเห็นและโค้ด
+
+<a id="comment-sentences"></a>
+
+### Comment sentences
+
+<a id="TOC-CommentSentences"></a>
+
+ความคิดเห็นที่เป็นประโยคที่สมบูรณ์ควรขึ้นต้นด้วยตัวพิมพ์ใหญ่และใช้เครื่องหมายวรรคตอนเหมือนกับประโยคภาษาอังกฤษทั่วไป (ข้อยกเว้นคือ อนุญาตให้เริ่มต้นประโยคด้วยชื่อตัวระบุ (identifier name) ที่ไม่ขึ้นต้นด้วยตัวพิมพ์ใหญ่ได้ หากมีความชัดเจนในบริบทนั้นๆ กรณีเช่นนี้ควรทำเฉพาะในช่วงเริ่มต้นของย่อหน้าเท่านั้นอาจจะดีที่สุด)
+
+ความคิดเห็นที่เป็น วลี (sentence fragments) ไม่มีข้อกำหนดดังกล่าวสำหรับการใช้เครื่องหมายวรรคตอนหรือการขึ้นต้นด้วยตัวพิมพ์ใหญ่
+
+[Documentation comments] ควรเป็นประโยคที่สมบูรณ์เสมอ และด้วยเหตุนี้จึง ควรขึ้นต้นด้วยตัวพิมพ์ใหญ่และใช้เครื่องหมายวรรคตอนเสมอ ส่วนความคิดเห็นแบบสั้นท้ายบรรทัด (โดยเฉพาะอย่างยิ่งสำหรับฟิลด์ของโครงสร้าง/struct fields) อาจเป็นเพียงวลีสั้น ๆ ที่ถือว่าชื่อฟิลด์นั้นเป็นประธานของประโยคอยู่แล้ว
+
+```go
+// Good:
+// A Server handles serving quotes from the collected works of Shakespeare.
+type Server struct {
+    // BaseDir points to the base directory under which Shakespeare's works are stored.
+    //
+    // The directory structure is expected to be the following:
+    //   {BaseDir}/manifest.json
+    //   {BaseDir}/{name}/{name}-part{number}.txt
+    BaseDir string
+
+    WelcomeMessage  string // displayed when user logs in
+    ProtocolVersion string // checked against incoming requests
+    PageLength      int    // lines per page when printing (optional; default: 20)
+}
+```
+
+[Documentation comments]: #doc-comments
+
+<a id="examples"></a>
+
+### Examples
+
+<a id="TOC-Examples"></a>
+
+แพ็กเกจควรจัดทำเอกสารอย่างชัดเจนเกี่ยวกับ การใช้งานที่ตั้งใจไว้ พยายามจัดเตรียม [ตัวอย่างที่สามารถเรียกใช้งานได้ (runnable example)]; ตัวอย่างเหล่านี้จะแสดงใน Godoc ตัวอย่างที่สามารถเรียกใช้งานได้ควรอยู่ใน ไฟล์ทดสอบ (test file) ไม่ใช่ในไฟล์ซอร์สโค้ดที่ใช้ในการผลิต (production source file) ดูตัวอย่างได้จากที่นี่ ([Godoc], [source])
+
+[runnable example]: http://blog.golang.org/examples
+[Godoc]: https://pkg.go.dev/time#example-Duration
+[source]: https://cs.opensource.google/go/go/+/HEAD:src/time/example_test.go
+
+หาก ไม่สามารถ จัดเตรียมตัวอย่างที่สามารถเรียกใช้งานได้ (runnable example) รหัสตัวอย่างก็สามารถให้ไว้ในส่วนของความคิดเห็นโค้ดได้ เช่นเดียวกับสแนปเพต (snippets) ของโค้ดและบรรทัดคำสั่งอื่น ๆ ที่อยู่ในความคิดเห็น ก็ควรปฏิบัติตามหลักเกณฑ์การจัดรูปแบบมาตรฐาน
+
+<a id="named-result-parameters"></a>
+
+### Named result parameters
+
+<a id="TOC-NamedResultParameters"></a>
+
+เมื่อตั้งชื่อพารามิเตอร์ (parameters) ให้คำนึงถึงว่า รูปแบบของฟังก์ชัน (function signatures) จะปรากฏใน Godoc อย่างไร ชื่อของฟังก์ชันเองและชนิด (type) ของพารามิเตอร์ผลลัพธ์ (result parameters) มักจะมีความชัดเจนเพียงพออยู่แล้ว
+
+```go
+// Good:
+func (n *Node) Parent1() *Node
+func (n *Node) Parent2() (*Node, error)
+```
+
+หากฟังก์ชันส่งคืน พารามิเตอร์ตั้งแต่สองตัวขึ้นไป ที่มี ชนิด (type) เดียวกัน การเพิ่มชื่อ (names) ให้กับพารามิเตอร์เหล่านั้นจะเป็นประโยชน์ได้
+
+```go
+// Good:
+// WithTimeout returns a context that will be canceled no later than d duration
+// from now.
+//
+// The caller must arrange for the returned cancel function to be called when
+// the context is no longer needed to prevent a resource leak.
+func WithTimeout(parent Context, d time.Duration) (ctx Context, cancel func())
+```
+
+ในโค้ดข้างต้น การยกเลิก (cancellation) เป็นการดำเนินการเฉพาะที่ผู้เรียก (caller) ต้องทำ อย่างไรก็ตาม หากพารามิเตอร์ผลลัพธ์ถูกเขียนเป็นเพียงแค่ `(Context, func())` ก็จะ ไม่ชัดเจน ว่า "ฟังก์ชันยกเลิก" (cancel function) หมายถึงอะไร
+
+อย่าใช้ พารามิเตอร์ผลลัพธ์แบบมีชื่อ (named result parameters) เมื่อชื่อเหล่านั้นทำให้เกิด การซ้ำซ้อนโดยไม่จำเป็น [unnecessary repetition](#repetitive-with-type).
+
+```go
+// Bad:
+func (n *Node) Parent1() (node *Node)
+func (n *Node) Parent2() (node *Node, err error)
+```
+
+อย่าตั้งชื่อพารามิเตอร์ผลลัพธ์ (result parameters) เพื่อหลีกเลี่ยงการประกาศตัวแปรภายในฟังก์ชัน (declaring a variable inside the function) การปฏิบัตินี้ทำให้ API มีความเยิ่นเย้อ (verbosity) โดยไม่จำเป็น ซึ่งแลกมากับการเขียนโค้ดภายในที่กระชับขึ้นเพียงเล็กน้อยเท่านั้น (minor implementation brevity)
+
+การคืนค่าแบบ [Naked returns] (การใช้ return โดยไม่มีการระบุชื่อตัวแปรที่คืนค่า) นั้น ยอมรับได้เฉพาะในฟังก์ชันขนาดเล็กเท่านั้น เมื่อฟังก์ชันมีขนาดปานกลางแล้ว ให้ระบุค่าที่คุณคืนอย่างชัดเจน (explicit) ในทำนองเดียวกัน อย่า ตั้งชื่อพารามิเตอร์ผลลัพธ์ เพียงเพราะว่ามันทำให้คุณสามารถใช้ Naked Returns ได้
+
+ความชัดเจน [Clarity](guide#clarity) มีความสำคัญมากกว่าการประหยัดบรรทัดโค้ดเพียงเล็กน้อยในฟังก์ชันของคุณเสมอ
+
+การตั้งชื่อพารามิเตอร์ผลลัพธ์ (result parameter) นั้น เป็นที่ยอมรับได้เสมอ หากจำเป็นต้องมีการ เปลี่ยนแปลงค่า ของพารามิเตอร์นั้น ภายใน deferred closure (ฟังก์ชันที่ถูกเรียกใช้แบบเลื่อนเวลา ซึ่งใช้ตัวแปรภายนอก)
+
+- **Tip** ชนิดข้อมูล (Types) มักจะมีความชัดเจนกว่าชื่อ (names) ในรูปแบบของฟังก์ชัน (function signatures)
+- [GoTip #38: Functions as Named Types] แสดงให้เห็นถึงสิ่งนี้
+- ในตัวอย่าง [`WithTimeout`] ข้างต้น โค้ดจริงใช้ [`CancelFunc`] แทนที่จะเป็น `func()` แบบดิบๆ (raw `func()`) ในรายการพารามิเตอร์ผลลัพธ์ และ ต้องการความพยายามในการจัดทำเอกสารเพียงเล็กน้อย (requires little effort to document)
+
+[Naked returns]: https://tour.golang.org/basics/7
+[GoTip #38: Functions as Named Types]: https://google.github.io/styleguide/go/index.html#gotip
+[`WithTimeout`]: https://pkg.go.dev/context#WithTimeout
+[`CancelFunc`]: https://pkg.go.dev/context#CancelFunc
+
+<a id="package-comments"></a>
+
+### Package comments
+
+<a id="TOC-PackageComments"></a>
+
+Package comments ต้องปรากฏอยู่ เหนือ ข้อความ `package` โดยทันที และ ไม่มีบรรทัดว่าง ระหว่างความคิดเห็นกับชื่อแพ็กเกจ ตัวอย่าง:
+
+```go
+// Good:
+// Package math provides basic constants and mathematical functions.
+//
+// This package does not guarantee bit-identical results across architectures.
+package math
+```
+
+ต้องมี ความคิดเห็นของแพ็กเกจ (package comment) เพียงอันเดียวต่อหนึ่งแพ็กเกจ หากแพ็กเกจประกอบด้วยหลายไฟล์ จะต้องมีไฟล์เพียง หนึ่งเดียวเท่านั้น ที่มีความคิดเห็นของแพ็กเกจนั้น
+
+Comments สำหรับแพ็กเกจ `main` จะมีรูปแบบที่แตกต่างออกไปเล็กน้อย โดยที่ ชื่อของกฎ `go_binary` ในไฟล์ BUILD จะเข้ามาทำหน้าที่แทนที่ชื่อแพ็กเกจ
+
+```go
+// Good:
+// The seed_generator command is a utility that generates a Finch seed file
+// from a set of JSON study configs.
+package main
+```
+
+รูปแบบความคิดเห็นอื่น ๆ นั้นใช้ได้ ตราบใดที่ ชื่อของไบนารี (binary name) ตรงตามที่เขียนไว้ในไฟล์ BUILD ทุกประการ เมื่อชื่อไบนารีเป็นคำแรก การขึ้นต้นด้วยตัวพิมพ์ใหญ่ (capitalizing) นั้นเป็นสิ่งที่ จำเป็น แม้ว่ามันจะไม่ตรงกับการสะกดของการเรียกใช้ทางบรรทัดคำสั่ง (command-line invocation) อย่างเคร่งครัดก็ตาม
+
+```go
+// Good:
+// Binary seed_generator ...
+// Command seed_generator ...
+// Program seed_generator ...
+// The seed_generator command ...
+// The seed_generator program ...
+// Seed_generator ...
+```
+
+เคล็ดลับ :
+
+- ตัวอย่างการเรียกใช้ทางบรรทัดคำสั่ง (command-line invocations) และการใช้งาน API สามารถเป็นเอกสารที่มีประโยชน์ได้ สำหรับการจัดรูปแบบ Godoc ให้ ย่อหน้า (indent) บรรทัดความคิดเห็นที่บรรจุโค้ดเหล่านั้น
+
+- หากไม่มีไฟล์หลักที่ชัดเจน (obvious primary file) หรือหากความคิดเห็นของแพ็กเกจ (package comment) มีความ ยาวมากเป็นพิเศษ ก็เป็นที่ยอมรับได้ที่จะใส่ความคิดเห็นประกอบเอกสาร (doc comment) ไว้ในไฟล์ที่ชื่อว่า $\text{`doc.go`}$ โดยมีเพียงความคิดเห็นและส่วนของการประกาศแพ็กเกจ ($\text{`package clause`}$) เท่านั้น
+
+- สามารถใช้ ความคิดเห็นหลายบรรทัด (Multiline comments) แทนความคิดเห็นเดี่ยวหลายบรรทัดได้ สิ่งนี้มีประโยชน์หลักๆ หากเอกสารประกอบมีส่วนที่อาจเป็นประโยชน์ในการ คัดลอกและวาง (copy and paste) จากไฟล์ซอร์ส เช่นเดียวกับตัวอย่างบรรทัดคำสั่ง (สำหรับไบนารี) และตัวอย่างเทมเพลต
+
+  ```go
+   // Good:
+   /*
+   The seed_generator command is a utility that generates a Finch seed file
+   from a set of JSON study configs.
+
+       seed_generator *.json | base64 > finch-seed.base64
+   */
+   package template
+  ```
+
+ความคิดเห็นที่ตั้งใจไว้สำหรับ ผู้ดูแล (maintainers) และที่นำไปใช้กับ ทั้งไฟล์ มักจะถูกวางไว้ หลังการประกาศการนำเข้า (import declarations) ความคิดเห็นเหล่านี้จะ ไม่ปรากฏใน Godoc และ ไม่อยู่ภายใต้กฎ เกี่ยวกับความคิดเห็นของแพ็กเกจ (package comments) ที่กล่าวมาข้างต้น
+
+<a id="imports"></a>
+
+## การนำเข้า (Imports)
+
+<a id="TOC-Imports"></a>
+
+<a id="import-renaming"></a>
+
+### การเปลี่ยนชื่อ (Import renaming)
+
+การนำเข้าแพ็กเกจ (Package imports) ไม่ควร ถูกเปลี่ยนชื่อตามปกติ แต่ก็มีบางกรณีที่จำเป็นต้องเปลี่ยนชื่อ หรือกรณีที่การเปลี่ยนชื่อช่วย ปรับปรุงความสามารถในการอ่าน ให้ดีขึ้น
+
 ## -----------check point----------
 
 - **Doc Comments:** ชื่อที่ Export ต้องมี Doc comment เสมอ โดยเริ่มด้วยชื่อของสิ่งนั้นและเป็นประโยคที่สมบูรณ์
